@@ -46,8 +46,12 @@ function CustomerList() {
   const columns: GridColDef[] = [
     { field: "firstname", headerName: "First name", width: 130 },
     { field: "lastname", headerName: "Last name", width: 130 },
+    { field: "streetaddress", headerName: "Street Address", width: 130 },
+    { field: "postcode", headerName: "Postcode", width: 130 },
+    { field: "city", headerName: "city", width: 130 },
     { field: "phone", headerName: "Phone", width: 150 },
-    { field: "email", headerName: "Email", width: 0 },
+    { field: "email", headerName: "Email", width: 300 },
+
 
     {
       field: "delete",
@@ -55,7 +59,7 @@ function CustomerList() {
       renderCell: (params) => (
         <Button
           color="error"
-          onClick={() => handleDelete(params.row.id)}
+          onClick={() => handleDelete(params.row._links.self.href)}
         >
           <DeleteIcon />
         </Button>
@@ -75,11 +79,11 @@ function CustomerList() {
 
   return (
     <>
-      <Stack sx={{ mt: 2 }}>
+      <Stack sx={{ mt: 2, width: "100%" }}>
         <AddCustomer handleAdd={handleAdd} />
       </Stack>
 
-      <div style={{ height: 500 }}>
+      <div style={{ height: 500, width: "100%" }}>
         <DataGrid
           rows={customers}
           columns={columns}
