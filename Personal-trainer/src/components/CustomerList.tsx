@@ -6,6 +6,8 @@ import Stack from "@mui/material/Stack";
 import { getCustomers, saveCustomer, updateCustomer, deleteCustomer } from "../api";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 
 
 function CustomerList() {
@@ -45,17 +47,18 @@ function CustomerList() {
     { field: "firstname", headerName: "First name", width: 130 },
     { field: "lastname", headerName: "Last name", width: 130 },
     { field: "phone", headerName: "Phone", width: 150 },
-    { field: "email", headerName: "Email", width: 200 },
+    { field: "email", headerName: "Email", width: 0 },
 
     {
       field: "delete",
       headerName: "",
       renderCell: (params) => (
         <Button
+          size="small"
           color="error"
-          onClick={() => handleDelete(params.row._links.self.href)}
+          onClick={() => handleDelete(params.row.id)}
         >
-          DELETE
+          <DeleteIcon />
         </Button>
       ),
     },

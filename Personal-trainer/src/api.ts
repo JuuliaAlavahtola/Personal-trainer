@@ -1,4 +1,4 @@
-import type { Customer, Training } from "./types";
+import type { Customer } from "./types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -54,7 +54,13 @@ export const getTrainings = () => {
     });
 };
 
-export const saveTraining = (training: Training & { customer: string }) => {
+export const saveTraining = (training: {
+  date: string;
+  activity: string;
+  duration: number;
+  customer: string;
+}) => {
+
   return fetch(`${API_URL}/trainings`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

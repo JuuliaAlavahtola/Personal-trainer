@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { deleteTraining, getTrainings } from "../api";
-import {
-  DataGrid,
-  type GridColDef,
-  type GridRenderCellParams,
-  GridToolbar,
-} from "@mui/x-data-grid";
+import { DataGrid, type GridColDef, GridToolbar } from "@mui/x-data-grid";
 import dayjs from "dayjs";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import type { TrainingData } from "../types";
+import AddTraining from "./AddTraining";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 
 function TrainingList() {
   const [trainings, setTrainings] = useState<TrainingData[]>([]);
@@ -36,24 +34,16 @@ function TrainingList() {
       field: "date",
       headerName: "Date",
       width: 180,
-      renderCell: (params: GridRenderCellParams<TrainingData>) =>
+      renderCell: (params) =>
         dayjs(params.value as string).format("DD.MM.YYYY HH:mm"),
     },
-    {
-      field: "activity",
-      headerName: "Activity",
-      width: 150,
-    },
-    {
-      field: "duration",
-      headerName: "Duration",
-      width: 120,
-    },
+    { field: "activity", headerName: "Activity", width: 150 },
+    { field: "duration", headerName: "Duration", width: 120 },
     {
       field: "customer",
       headerName: "Customer",
       width: 200,
-      renderCell: (params: GridRenderCellParams<TrainingData>) =>
+      renderCell: (params) =>
         `${params.row.customer.firstname} ${params.row.customer.lastname}`,
     },
     {
@@ -61,26 +51,34 @@ function TrainingList() {
       headerName: "",
       sortable: false,
       filterable: false,
-      renderCell: (params: GridRenderCellParams<TrainingData>) => (
+      renderCell: (params) => (
         <Button
           color="error"
           onClick={() => handleDelete(params.row.id)}
         >
-          DELETE
+          <DeleteIcon />
         </Button>
+
       ),
     },
   ];
 
   return (
-    <div style={{ height: 500 }}>
-      <DataGrid
-        rows={trainings}
-        columns={columns}
-        getRowId={(row) => row.id}
-        slots={{ toolbar: GridToolbar }}
-      />
-    </div>
+    <>
+
+      <Stack sx={{ mt: 2, mb: 2 }}>
+        <AddTraining fetchTrainings={fetchData} />
+      </Stack>
+
+      <div style={{ height: 500 }}>
+        <DataGrid
+          rows={trainings}
+          columns={columns}
+          getRowId={(row) => row.id}
+          slots={{ toolbar: GridToolbar }}
+        />
+      </div>
+    </>
   );
 }
 
