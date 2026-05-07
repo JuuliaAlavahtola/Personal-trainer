@@ -54,7 +54,6 @@ function CustomerList() {
       headerName: "",
       renderCell: (params) => (
         <Button
-          size="small"
           color="error"
           onClick={() => handleDelete(params.row.id)}
         >
